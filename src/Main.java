@@ -14,6 +14,7 @@ public class Main extends Applet implements Runnable, KeyListener {
     Graphics gfx;
     Image img;
     ArrayList<Unit> units;
+    Board b;
 
 
     public void init(){//STARTS THE PROGRAM
@@ -21,6 +22,7 @@ public class Main extends Applet implements Runnable, KeyListener {
         this.addKeyListener(this);
         UnitImporter ui=new UnitImporter();
         units=ui.getUnits();
+        b=new Board(this);
         img=createImage(WIDTH,HEIGHT);
         gfx=img.getGraphics();
         thread=new Thread(this);
@@ -32,7 +34,7 @@ public class Main extends Applet implements Runnable, KeyListener {
         gfx.fillRect(0,0,WIDTH,HEIGHT);
 
 
-
+        b.paintBoard(gfx);
 
         g.drawImage(img,0,0,this);
     }

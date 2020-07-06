@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 
-public class Unit {
+public class Unit implements Common_Variables{
     String n;
     int[] mhp,mana;
     float[] dmg;
     int def,mr,ar,cost;
     float crit,as;
     ArrayList<String> traits;
+    int tcode;
 
     public Unit(String d){
         ArrayList<String> v=new ArrayList<>();
@@ -25,6 +26,8 @@ public class Unit {
         crit=Float.parseFloat(v.get(14));
         traits=new ArrayList<>();
         for (int i=15; i<v.size(); i++){ traits.add(v.get(i)); }
+        tcode=1;
+        for (String s: traits){tcode=tcode*GETTCODE(s);}
     }
 
     public int getInt(String s){
@@ -38,7 +41,7 @@ public class Unit {
         for (String s: traits){
             d=(f)?d+s+" ":d+"and "+s+" ";f=false;
         }
-        d+=" | HP = "+mhp[0]+" / "+mhp[1]+" / "+mhp[2]+" | Mana = "+mana[0]+" / "+mana[1];
+        d+="("+tcode+") | HP = "+mhp[0]+" / "+mhp[1]+" / "+mhp[2]+" | Mana = "+mana[0]+" / "+mana[1];
         d+=" | DMG = "+dmg[0]+" / "+dmg[1]+" / "+dmg[2]+" | ";
         d+=" | DEF = "+def+" | MR = "+mr+" | AR = "+ar+" | AS = "+as+" | CRIT = "+crit;
         return d;
