@@ -3,7 +3,7 @@ public interface Common_Variables {
             "ManaReaver","Demolitionist","Mercenary","Battlecast","DarkStar","Chrono","Cybernetic","StarGuardian","Celestial","Astro","SpacePirate","Valkyrie","MechPilot"};
     int[] TCODES=new int[]{2,3,5,7,11,13,17,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,97,101};
     /*
-    * Brief explanation of what this is:
+    * I realize this section is kinda incomprehensible, so heres a brief explanation of what this is:
     * To avoid having to run string checks on every trait a character has every time you need to check if a unit has a specific trait, I devised this method
     * Each trait is connected to a specific prime number, and every character has a trait code which is the product of all the prime numbers representing their traits
     * For example, a blademaster & mystic unit would have the code 2*3=6
