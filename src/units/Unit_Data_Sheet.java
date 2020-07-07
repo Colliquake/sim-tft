@@ -1,4 +1,6 @@
-public interface Unit_Data {
+package units;
+
+public interface Unit_Data_Sheet {
     String SHEET=
             "Ahri\t2\t600\t1080\t1944\t0\t60\t45\t81\t145.8\t20\t20\t660\t0.75\t0.25\tStarGuardian\tSorcerer\n" +
             "Annie\t2\t750\t1350\t2430\t70\t140\t40\t72\t129.6\t40\t35\t420\t0.65\t0.25\tMechPilot\tSorcerer\n" +

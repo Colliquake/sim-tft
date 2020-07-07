@@ -1,7 +1,16 @@
+package main;
+
+import units.Unit;
+import units.Unit_Importer;
+import units.Unit_Info;
+
+import java.util.ArrayList;
+
 public interface Common_Variables {
     String[] TRAITS=new String[]{"Blademaster","Mystic","Protector","Blaster","Infiltrator","Sniper","Sorcerer","Vanguard","Brawler","Paragon","Starship",
             "ManaReaver","Demolitionist","Mercenary","Battlecast","DarkStar","Chrono","Cybernetic","StarGuardian","Celestial","Astro","SpacePirate","Valkyrie","MechPilot"};
     int[] TCODES=new int[]{2,3,5,7,11,13,17,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,97,101};
+    ArrayList<Unit_Info> UNITS=(new Unit_Importer()).getUnits();
     /*
     * I realize this section is kinda incomprehensible, so heres a brief explanation of what this is:
     * To avoid having to run string checks on every trait a character has every time you need to check if a unit has a specific trait, I devised this method

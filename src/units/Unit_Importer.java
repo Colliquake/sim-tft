@@ -1,8 +1,10 @@
+package units;
+
 import java.util.ArrayList;
 
-public class UnitImporter implements Unit_Data{
-    ArrayList<Unit> units;
-    public UnitImporter(){
+public class Unit_Importer implements Unit_Data_Sheet {
+    ArrayList<Unit_Info> units;
+    public Unit_Importer(){
         ArrayList<String> lines=new ArrayList<>();
         int lastLine=0;
 
@@ -15,14 +17,14 @@ public class UnitImporter implements Unit_Data{
         lines.add(SHEET.substring(lastLine,SHEET.length()));
         units=new ArrayList<>();
         for (String s: lines){
-            units.add(new Unit(s));
+            units.add(new Unit_Info(s));
         }
-        for (Unit u : units){
+        for (Unit_Metadata u : units){
             System.out.println(u.getInfo());
         }
     }
 
-    public ArrayList<Unit> getUnits() {
+    public ArrayList<Unit_Info> getUnits() {
         return units;
     }
 }

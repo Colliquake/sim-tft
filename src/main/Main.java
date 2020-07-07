@@ -1,30 +1,30 @@
+package main;
+
+import units.Unit_Importer;
+import units.Unit_Info;
+
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-public class Main extends Applet implements Runnable, KeyListener {
+public class Main extends Applet implements Common_Variables, Runnable, KeyListener {
 
     private final int WIDTH=1280, HEIGHT=900;
     private Thread thread;
     Graphics gfx;
     Image img;
-    ArrayList<Unit> units;
     Board b;
 
 
     public void init(){//STARTS THE PROGRAM
         this.resize(WIDTH, HEIGHT);
         this.addKeyListener(this);
-        UnitImporter ui=new UnitImporter();
-        units=ui.getUnits();
         b=new Board(this);
         img=createImage(WIDTH,HEIGHT);
         gfx=img.getGraphics();
+        gfx.setFont(gfx.getFont().deriveFont(20f));
         thread=new Thread(this);
         thread.start();
     }

@@ -1,6 +1,8 @@
-import java.util.ArrayList;
+package units;
 
-public class Unit implements Common_Variables{
+import java.util.ArrayList;
+import main.Common_Variables;
+public abstract class Unit_Metadata implements Common_Variables {
     String n;
     int[] mhp,mana;
     float[] dmg;
@@ -9,7 +11,7 @@ public class Unit implements Common_Variables{
     ArrayList<String> traits;
     int tcode;
 
-    public Unit(String d){
+    public Unit_Metadata(String d){
         ArrayList<String> v=new ArrayList<>();
         int last=0;
         for (int i=0; i<d.length()-1; i++){ if (d.substring(i,i+1).equalsIgnoreCase("\t")){ v.add(d.substring(last,i));last=i+1; } }
