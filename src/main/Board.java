@@ -13,8 +13,7 @@ public class Board implements Common_Variables {
     int[][] t2;
     ArrayList<Unit> t1u;
     ArrayList<Unit> t2u;
-    Unit[] units;
-    int ts=90;
+    public Unit[] units;
 
     public Board(Main mn){
         this.main=mn;
@@ -27,12 +26,12 @@ public class Board implements Common_Variables {
         units=new Unit[ts1+ts2];
         int i=0;
         for (int[] u: t1){
-            units[i]=new Unit(UNITS.get(u[0]),this,u[1],u[2],t1,true,i+1, u[6]);
+            units[i]=new Unit(UNITS.get(u[0]),this,u[1],u[2],t1,true,i, u[6]);
             t1u.add(units[i]);
             i++;
         }
         for (int[] u: t2){
-            units[i]=new Unit(UNITS.get(u[0]),this,u[1],u[2],t2,false, i+1,u[6]);
+            units[i]=new Unit(UNITS.get(u[0]),this,u[1],u[2],t2,false, i,u[6]);
             t2u.add(units[i]);
             i++;
         }
@@ -52,6 +51,12 @@ public class Board implements Common_Variables {
         return new Vec2f(((y%2==1)?ts/2:0)+ts*x+(ts*.4f),y*ts+(int)(ts*.4f));
     }
 
+    public void update(float delta){
+        for (Unit u:units){
+            u.update(delta);
+        }
+    }
+
     public void paintBoard(Graphics gfx){
         int sx=200,sy=100;
 
@@ -62,9 +67,54 @@ public class Board implements Common_Variables {
                 gfx.setColor(Color.WHITE);
                 gfx.fillRect(sx+5+((y%2==1)?ts/2:0)+ts*x,sy+5+y*ts,(int)(ts*.8f)-10,(int)(ts*.8f)-10);
                 if (m[x][y]!=0){
-                    units[m[x][y]-1].paintUnit(sx+((y%2==1)?ts/2:0)+ts*x+(int)(ts*.4),sy+y*ts+(int)(ts*.4),gfx,ts);
+                    //units[m[x][y]-1].paintUnit(sx+((y%2==1)?ts/2:0)+ts*x+(int)(ts*.4),sy+y*ts+(int)(ts*.4),gfx,ts);
                 }
             }
         }
+        //System.out.println(units.length);
+        for (Unit u:units){
+            u.paintUnit(gfx,sx,sy);
+        }
     }
+
+    public int getClosestIndex(Unit u){
+        ArrayList<Unit> enemies=(u.ally)?t2u:t1u;
+        int closest=0;
+        float d=10000000;
+        for (Unit u1: enemies){
+            float dist=u1.pos.distance(u.pos);
+            if (dist<d){
+                closest=u1.index;
+                d=dist;
+            }
+        }
+        return closest;
+    }
+
+    public int[] getClosestTile(Vec2f p){//THIS METHOD IS VERY INEFFICIENT, AND I WILL REWORK IT LATER
+        int[] c=new int[]{0,0};
+        float dist=10000000;
+        /*for (int y=(int)Math.floor(p.y/ts)-1;y<=((int)Math.ceil(p.y/ts))+1; y++) {
+            for (int x=(int)Math.floor((p.x-((y%2==1)?ts/2:0))/ts)-1;x<=((int)Math.ceil((p.x-((y%2==1)?ts/2:0))/ts))+1; x++){
+                float d=p.distance(getTilePos(x,y));
+                if (d<dist){
+                    dist=d;
+                    c[0]=x;c[1]=y;
+                }
+            }
+        }*/
+        for (int y=0;y<6; y++) {
+            for (int x=0;x<7; x++){
+                if (m[x][y]!=0){continue;}
+                float d=p.distance(getTilePos(x,y));
+                if (d<dist){
+                    dist=d;
+                    c[0]=x;c[1]=y;
+                }
+            }
+        }
+
+        return c;
+    }
+
 }

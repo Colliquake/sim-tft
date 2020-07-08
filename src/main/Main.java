@@ -46,7 +46,7 @@ public class Main extends Applet implements Common_Variables, Runnable, KeyListe
     public void run() { for (;;){//CALLS UPDATES AND REFRESHES THE GAME
 
 
-
+        b.update(.015f);
         repaint();//UPDATES FRAME
         try{ Thread.sleep(15); } //ADDS TIME BETWEEN FRAMES (FPS)
         catch (InterruptedException e) { e.printStackTrace();System.out.println("GAME FAILED TO RUN"); }//TELLS USER IF GAME CRASHES AND WHY
