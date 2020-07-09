@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface Common_Variables {
     String[] TRAITS=new String[]{"Blademaster","Mystic","Protector","Blaster","Infiltrator","Sniper","Sorcerer","Vanguard","Brawler","Paragon","Starship",
-            "ManaReaver","Demolitionist","Mercenary","Battlecast","DarkStar","Chrono","Cybernetic","StarGuardian","Celestial","Astro","SpacePirate","Valkyrie","MechPilot"};
+            "ManaReaver","Demolitionist","Mercenary","Battlecast","DarkStar","Chrono","Cybernetic","StarGuardian","Celestial","Astro","SpacePirate","MechPilot"};
     int[] TCODES=new int[]{2,3,5,7,11,13,17,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,97,101};
     ArrayList<Unit_Info> UNITS=(new Unit_Importer()).getUnits();
     float ARSCALE=1.5f;
