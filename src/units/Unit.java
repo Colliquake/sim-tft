@@ -15,7 +15,7 @@ public class Unit implements Common_Variables {
     public int index;
     public boolean ally;
     int star;
-    int[] hp;
+    public int[] hp;
     int[] mana;
     float dmg,as,crit;
     int def,mr,ar;
@@ -52,24 +52,29 @@ public class Unit implements Common_Variables {
         atimer=1/as;
     }
 
-    public void paintUnit(int x, int y, Graphics gfx,int size){
-        gfx.setColor((ally)?Color.BLUE:Color.RED);
-        gfx.fillOval(x-size/2,y-size/2,size,size);
-        gfx.setColor(Color.LIGHT_GRAY);
-        gfx.fillOval(x-size/2+5,y-(size/2)+5,size-10,size-10);
-        gfx.setColor(Color.BLACK);
-        gfx.drawString(ui.n,x-(int)(size*.35),y-10);
-    }
     public void paintUnit(Graphics gfx,int sx, int sy){
+        if (hp[0]<=0){return;}
         gfx.setColor((ally)?Color.BLUE:Color.RED);
         gfx.fillOval(sx+(int)pos.x-ts/2,sy+(int)pos.y-ts/2,ts,ts);
         gfx.setColor(Color.LIGHT_GRAY);
         gfx.fillOval(sx+(int)pos.x-ts/2+5,sy+(int)pos.y-(ts/2)+5,ts-10,ts-10);
         gfx.setColor(Color.BLACK);
         gfx.drawString(ui.n,sx+(int)pos.x-(int)(ts*.35),sy+(int)pos.y-10);
+        gfx.fillRect(sx+(int)pos.x-ts/2+5,sy+(int)pos.y-(ts/2)+60,ts-10,30);
+        gfx.setColor(Color.RED);
+        gfx.fillRect(sx+(int)pos.x-ts/2+5,sy+(int)pos.y-(ts/2)+60,(int)((ts-10)*(float)hp[0]/hp[1]),15);
+        gfx.setColor(Color.BLUE);
+        gfx.fillRect(sx+(int)pos.x-ts/2+5,sy+(int)pos.y-(ts/2)+75,(int)((ts-10)*(float)mana[0]/mana[1]),15);
+    }
+    public void paintTarget(Graphics gfx,int sx, int sy){
+        if (hp[0]<=0){return;}
+        if (targetIndex==-1){return;}
+        gfx.setColor((ally)?Color.BLUE:Color.RED);
+        gfx.drawLine(sx+(int)pos.x,sy+(int)pos.y, sx+(int)b.units[targetIndex].pos.x,sy+(int)b.units[targetIndex].pos.y);
     }
 
-    public void update(float delta){
+    public void update(float delta, boolean overtime){
+        if (hp[0]<=0){ if (b.m[x][y]==index+1){b.m[x][y]=0;}return;}
         if (tx!=x||ty!=y){
             move(delta);
         }else {
@@ -77,22 +82,22 @@ public class Unit implements Common_Variables {
                 int closest = b.getClosestIndex(this);
                 if (b.units[closest].isTargetable(this)) {
                     targetIndex = closest;
-                    update(delta);
+                    update(delta, overtime);
                 }else {
                     setTargetLoc(closest);
                     //update(delta);
                 }
             } else {
                 if (b.units[targetIndex].isTargetable(this)) {
-                    atimer -= delta;
+                    atimer -= (!overtime)? delta:delta*3;
                     if (atimer < 0) {
-                        takeDamage(dmg, Math.random() < crit, critmult);
+                        b.units[targetIndex].takeDamage(dmg, Math.random() < crit, critmult);
                         atimer = 1 / as;
                     }
                 } else {
                     targetIndex = -1;
                     atimer = 1 / as;
-                    update(delta);
+                    update(delta, overtime);
                 }
             }
         }

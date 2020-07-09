@@ -1,6 +1,7 @@
 package main;
 
 import com.sun.javafx.geom.Vec2f;
+import com.sun.org.apache.regexp.internal.RE;
 import units.Unit;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ public class Board implements Common_Variables {
     ArrayList<Unit> t1u;
     ArrayList<Unit> t2u;
     public Unit[] units;
+    float elapsedTime=0;
 
     public Board(Main mn){
         this.main=mn;
@@ -52,9 +54,30 @@ public class Board implements Common_Variables {
     }
 
     public void update(float delta){
+        if (t1u.size()==0||t2u.size()==0){return;}
+        elapsedTime+=delta;
+        /*  TODO : OVERTIME MODE
+            After 30 seconds into every battle, URF Overtime kicks in and speeds things up for 15 seconds.
+                 × 3 attack speed.
+                100% increased ability power.
+                66% reduced crowd control duration.
+                66% healing and shielding reduction.
+        * */
         for (Unit u:units){
-            u.update(delta);
+            u.update(delta,elapsedTime>30);
         }
+        for (int i=0; i<t1u.size(); i++){
+            if (t1u.get(i).hp[0]<=0){
+                t1u.remove(i);
+                i--;
+            }
+        }for (int i=0; i<t2u.size(); i++){
+            if (t2u.get(i).hp[0]<=0){
+                t2u.remove(i);
+                i--;
+            }
+        }
+
     }
 
     public void paintBoard(Graphics gfx){
@@ -75,6 +98,12 @@ public class Board implements Common_Variables {
         for (Unit u:units){
             u.paintUnit(gfx,sx,sy);
         }
+        for (Unit u:units){
+            u.paintTarget(gfx,sx,sy);
+        }
+        gfx.setColor(Color.BLACK);
+        if (elapsedTime>30){gfx.setColor(Color.RED);}
+        gfx.drawString("Elapsed Time : "+(Math.round(elapsedTime*10)/10f),sx,sy-50);
     }
 
     public int getClosestIndex(Unit u){
@@ -91,7 +120,28 @@ public class Board implements Common_Variables {
         return closest;
     }
 
-    public int[] getClosestTile(Vec2f p){//THIS METHOD IS VERY INEFFICIENT, AND I WILL REWORK IT LATER
+    /*
+    *  -   -   5   0
+    *    -   4   x   1  (y%2==1)
+    *  -   -   3   2
+    * */
+    public int getXinDir(int x, int y, int d){
+        if (d==1){return x+1; }
+        else if (d==4){return x-1;}
+        if (y%2==1&&(d==0||d==2)){
+            return x+1;
+        }else if(y%2==0&&(d==3||d==5)){
+            return x-1;
+        }
+        return x;
+    }
+    public int getYinDir(int x, int y, int d){
+        if (d==0||d==5){return y-1;}
+        if (d==3||d==2){return y+1;}
+        return y;
+    }
+
+    public int[] getClosestTile(Vec2f p){//TODO : THIS METHOD IS VERY INEFFICIENT, AND I WILL REWORK IT LATER
         int[] c=new int[]{0,0};
         float dist=10000000;
         /*for (int y=(int)Math.floor(p.y/ts)-1;y<=((int)Math.ceil(p.y/ts))+1; y++) {
