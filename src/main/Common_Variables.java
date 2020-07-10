@@ -31,4 +31,12 @@ public interface Common_Variables {
         }
         return 1;
     }
+    default int GETTINDEX(String s){
+        for (int i=0; i<TRAITS.length; i++){
+            if (s.equalsIgnoreCase(TRAITS[i])){
+                return i;
+            }
+        }
+        return 1;
+    }
 }

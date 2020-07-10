@@ -8,7 +8,7 @@ public abstract class Unit_Metadata implements Common_Variables {
     float[] dmg;
     int def,mr,ar,cost;
     float crit,as;
-    ArrayList<String> traits;
+    public ArrayList<String> traits;
     int tcode;
 
     public Unit_Metadata(String d){

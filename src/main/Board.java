@@ -16,6 +16,7 @@ public class Board implements Common_Variables {
     ArrayList<Unit> t2u;
     public Unit[] units;
     float elapsedTime=0;
+    int[][] teamTraits;
 
     public Board(Main mn){
         this.main=mn;
@@ -26,17 +27,36 @@ public class Board implements Common_Variables {
         t1u=new ArrayList<>();
         t2u=new ArrayList<>();
         units=new Unit[ts1+ts2];
+        teamTraits=new int[][]{getTraits(t1),getTraits(t2)};
         int i=0;
         for (int[] u: t1){
-            units[i]=new Unit(UNITS.get(u[0]),this,u[1],u[2],t1,true,i, u[6]);
+            units[i]=new Unit(UNITS.get(u[0]),this,u[1],u[2],teamTraits[0],true,i, u[6]);
             t1u.add(units[i]);
             i++;
         }
         for (int[] u: t2){
-            units[i]=new Unit(UNITS.get(u[0]),this,u[1],u[2],t2,false, i,u[6]);
+            units[i]=new Unit(UNITS.get(u[0]),this,u[1],u[2],teamTraits[1],false, i,u[6]);
             t2u.add(units[i]);
             i++;
         }
+    }
+    public int[] getTraits(int[][] team){
+        int[] traits=new int[TRAITS.length];
+        ArrayList<Integer> unique=new ArrayList<>();
+        String tstring=" ";
+        for (int[] u:team){
+            if (!tstring.contains(" "+u[0]+" ")){
+                tstring=tstring+" "+u[0]+" ";
+                unique.add(u[0]);
+            }
+        }
+        System.out.println(unique);
+        for (int e: unique){
+            for (String s:UNITS.get(e).traits){
+                traits[GETTINDEX(s)]++;
+            }
+        }
+        return traits;
     }
     public int[][] randomTeam(int size){
         int[][] t=new int[size][];
@@ -91,6 +111,17 @@ public class Board implements Common_Variables {
                 gfx.fillRect(sx+5+((y%2==1)?ts/2:0)+ts*x,sy+5+y*ts,(int)(ts*.8f)-10,(int)(ts*.8f)-10);
                 if (m[x][y]!=0){
                     //units[m[x][y]-1].paintUnit(sx+((y%2==1)?ts/2:0)+ts*x+(int)(ts*.4),sy+y*ts+(int)(ts*.4),gfx,ts);
+                }
+            }
+        }
+        gfx.setColor(Color.BLACK);
+        for (int i=0; i<2; i++){
+            int y=100;
+            int x=50+820*i;
+            for (int t=0; t<teamTraits[i].length; t++){
+                if (teamTraits[i][t]>0){
+                    gfx.drawString(teamTraits[i][t]+" "+TRAITS[t],x,y);
+                    y+=50;
                 }
             }
         }
