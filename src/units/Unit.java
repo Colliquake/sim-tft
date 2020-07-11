@@ -22,11 +22,26 @@ public class Unit implements Common_Variables {
     int targetIndex=-1;
     int tx,ty;
     float atimer;
+<<<<<<< Updated upstream
     float critmult=2;
+=======
+    float ap=100;
+    float critmult=1.5;     //was set to 2, should be 1.5
+>>>>>>> Stashed changes
     public Vec2f pos;
     Vec2f hexPos,tHexPos;
     float ms=550;
     float[] moveTimer=new float[]{0,0};
+<<<<<<< Updated upstream
+=======
+    int[] tt; // TEAM TRAITS
+    float[] chronotimer=new float[]{100000,100000};
+    boolean dead=false;
+    String name;
+    int itemCount;
+    int totalItemID;
+    float lifesteal;
+>>>>>>> Stashed changes
 
 
     public Unit(Unit_Info ui, Board b, int x, int y, int[][] team, boolean ally,int index,int star){
@@ -50,6 +65,55 @@ public class Unit implements Common_Variables {
         mr=ui.mr;
         ar=ui.ar;
         atimer=1/as;
+<<<<<<< Updated upstream
+=======
+        chronotimer[0]=chronotimer[1];
+        name= ui.getName();
+        itemCount= 0;
+        totalItemID= 1;
+        lifesteal= (float)0.0;
+    }
+    public void applyTraitStatBonuses(int[] teamtraits){
+        if (teamtraits[1]>=2){
+            mr+=(teamtraits[1]>=4)?120:50;
+        }if (teamtraits[6]>=2){
+            ap+=(teamtraits[6]>=4)?((teamtraits[6]>=6)?75:45):20;
+        }if (teamtraits[7]>=2&&ui.tcode%TCODES[7]==0){
+            if (teamtraits[7]<4){
+                def+=125;
+            }else if (teamtraits[7]<6){
+                def+=300;
+            }else {
+                def+=1000;
+            }
+        }if (teamtraits[8]>=2&&ui.tcode%TCODES[8]==0){
+            if (teamtraits[8]<4){
+                hp[1]+=350;
+            }else {
+                hp[1]+=600;
+            }
+        }if (teamtraits[16]>=2&&ui.tcode%TCODES[16]==0){
+            if (teamtraits[8]<4){
+                chronotimer[1]=8;
+            }else if(teamtraits[16]<6){
+                chronotimer[1]=3.5f;
+            }else if(teamtraits[16]<8){
+                chronotimer[1]=1.5f;
+            }else{
+                chronotimer[1]=.75f;
+            }
+        }if (teamtraits[17]>=3&&ui.tcode%TCODES[17]==0){
+            if (teamtraits[17]>=6){
+                hp[1]+=550;
+                dmg+=70;
+            }else {
+                hp[1]+=300;
+                dmg+=35;
+            }
+        }if (teamtraits[20]>=3&&ui.tcode%TCODES[20]==0){
+            mana[1]-=30;
+        }
+>>>>>>> Stashed changes
     }
 
     public void paintUnit(Graphics gfx,int sx, int sy){
@@ -134,4 +198,57 @@ public class Unit implements Common_Variables {
         hp[0]-=(int)rdmg;
     }
 
+<<<<<<< Updated upstream
+=======
+    public void addMana(int amt){
+        mana[0]+=amt;
+        if (mana[0]>mana[1]){mana[0]=mana[1];}
+    }
+
+
+    public int getItemCount(){
+        return itemCount;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void incrementItemCount(){
+        itemCount++;
+    }
+
+    public void resetItemCount(){
+        itemCount= 0;
+    }
+
+    public void addItemID(int num){
+        totalItemID= totalItemID* num;
+    }
+
+    public int getTotalItemID(){
+        return totalItemID;
+    }
+
+    public void addHP(int num){
+        hp[0]+= num;
+        hp[1]+= num;
+    }
+
+    public void addLifesteal(float num){
+        lifesteal+= num;
+    }
+
+    public void increaseAS(float num){
+        as+= num;
+    }
+
+    public void addMR(int num){
+        mr+= num;
+    }
+
+    public void increaseCritChance(float num){
+        crit+= num;
+    }
+>>>>>>> Stashed changes
 }

@@ -48,4 +48,12 @@ public abstract class Unit_Metadata implements Common_Variables {
         d+=" | DEF = "+def+" | MR = "+mr+" | AR = "+ar+" | AS = "+as+" | CRIT = "+crit;
         return d;
     }
+
+    public String getName(){
+        return n;
+    }
+
+    public void multiplyTCode(int num){
+        tcode= tcode* num;
+    }
 }
