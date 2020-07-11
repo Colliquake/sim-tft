@@ -1,6 +1,7 @@
 package units;
 
 import java.util.ArrayList;
+import units.Unit_Data_Sheet;
 
 public class Unit_Importer implements Unit_Data_Sheet {
     ArrayList<Unit_Info> units;
@@ -19,7 +20,7 @@ public class Unit_Importer implements Unit_Data_Sheet {
         for (String s: lines){
             units.add(new Unit_Info(s));
         }
-        for (Unit_Metadata u : units){
+        for (Unit_Info u : units){
             System.out.println(u.getInfo());
         }
     }

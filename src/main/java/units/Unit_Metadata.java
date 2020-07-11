@@ -2,6 +2,7 @@ package units;
 
 import java.util.ArrayList;
 import main.Common_Variables;
+
 public abstract class Unit_Metadata implements Common_Variables {
     String n;
     int[] mhp,mana;

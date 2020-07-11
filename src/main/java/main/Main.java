@@ -1,13 +1,9 @@
 package main;
 
-import units.Unit_Importer;
-import units.Unit_Info;
-
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 public class Main extends Applet implements Common_Variables, Runnable, KeyListener {
 

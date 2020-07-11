@@ -1,12 +1,10 @@
 package units;
 
 import com.sun.javafx.geom.Vec2f;
-import main.Board;
 import main.Common_Variables;
-import main.Main;
+import main.Board;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Unit implements Common_Variables {
     Unit_Info ui;
@@ -33,7 +31,7 @@ public class Unit implements Common_Variables {
     boolean dead=false;
 
 
-    public Unit(Unit_Info ui, Board b, int x, int y, int[] teamtraits, boolean ally,int index,int star){
+    public Unit(Unit_Info ui, Board b, int x, int y, int[] teamtraits, boolean ally, int index, int star){
         b.m[(ally)?x:b.m.length-1-x][(ally)?b.m[0].length-1-y:y]=index+1;
         x=(ally)?x:b.m.length-1-x;
         y=(ally)?b.m[0].length-1-y:y;

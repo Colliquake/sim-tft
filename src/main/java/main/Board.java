@@ -1,9 +1,7 @@
 package main;
 
 import com.sun.javafx.geom.Vec2f;
-import com.sun.org.apache.regexp.internal.RE;
 import units.Unit;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -110,7 +108,7 @@ public class Board implements Common_Variables {
                 gfx.setColor(Color.WHITE);
                 gfx.fillRect(sx+5+((y%2==1)?ts/2:0)+ts*x,sy+5+y*ts,(int)(ts*.8f)-10,(int)(ts*.8f)-10);
                 if (m[x][y]!=0){
-                    //units[m[x][y]-1].paintUnit(sx+((y%2==1)?ts/2:0)+ts*x+(int)(ts*.4),sy+y*ts+(int)(ts*.4),gfx,ts);
+                    //main.java.units[m[x][y]-1].paintUnit(sx+((y%2==1)?ts/2:0)+ts*x+(int)(ts*.4),sy+y*ts+(int)(ts*.4),gfx,ts);
                 }
             }
         }
@@ -125,7 +123,7 @@ public class Board implements Common_Variables {
                 }
             }
         }
-        //System.out.println(units.length);
+        //System.out.println(main.java.units.length);
         for (Unit u:units){
             u.paintUnit(gfx,sx,sy);
         }
