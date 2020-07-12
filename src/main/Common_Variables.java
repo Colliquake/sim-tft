@@ -13,6 +13,16 @@ public interface Common_Variables {
     ArrayList<Unit_Info> UNITS=(new Unit_Importer()).getUnits();
     float ARSCALE=1.5f;
     int ts=90;
+    String[] ITEMS= new String[]{"BattlecastPlating", "Belt", "BladeOfTheRuinedKing", "Bloodthirster", "BlueBuff", "Bow", "BrambleVest", "Celestial Orb",
+            "ChalicOfPower", "Cloak", "DarkStarsHeart", "Deathblade", "DragonsClaw", "ForceOfNature", "FrozenHeart", "GiantSlayer", "Gloves",
+            "GuardianAngel", "GuinsoosRageblade", "HandOfJustice", "HextechGunblade", "InfiltratorsTalons", "InfinityEdge",
+            "IonicSpark", "JeweledGauntlet", "LastWhisper", "LocketOfTheIronSolari", "LudensEcho", "Morellonomicon",
+            "ProtectorsChestguard", "Quicksilver", "RabadonsDeathcap", "RapidFirecannon", "RebelMedal", "RedBuff",
+            "Redemption", "Rod", "RunaansHurricane", "ShroudOfStillness", "Spatula", "SpearOfShojin", "StarGuardiansCharm", "StatikkShiv", "Sword",
+            "SwordBreaker", "Tear", "ThiefsGloves", "TitansResolve", "TrapClaw", "Vest", "WarmogsArmor", "ZekesHerald", "Zephyr", "ZzRotPortal"};
+    int[] ICODES= new int[]{2,3,5,7,11,13,17,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,97,101,103,107,109,113,127,131,
+            137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251};
+
     /*
     * I realize this section is kinda incomprehensible, so heres a brief explanation of what this is:
     * To avoid having to run string checks on every trait a character has every time you need to check if a unit has a specific trait, I devised this method
@@ -38,5 +48,19 @@ public interface Common_Variables {
             }
         }
         return 1;
+    }
+    default ArrayList<Integer> getFactors(int num){
+        int rem=num;
+        ArrayList<Integer> factors=new ArrayList<>();
+        for (int i=2; i<num;i++){
+            if (rem%i==0){
+                factors.add(i);
+                rem=rem/i;
+                if (rem==1){
+                    return factors;
+                }
+            }
+        }
+        return factors;
     }
 }

@@ -7,6 +7,7 @@ import main.Main;
 
 import java.awt.*;
 import java.util.ArrayList;
+import items.Item_Effects;
 
 public class Unit implements Common_Variables {
     Unit_Info ui;
@@ -16,14 +17,14 @@ public class Unit implements Common_Variables {
     public boolean ally;
     int star;
     public int[] hp;
-    int[] mana;
-    float dmg,as,crit;
-    int def,mr,ar;
+    public int[] mana;
+    public float dmg,as,crit;
+    public int def,mr,ar;
     int targetIndex=-1;
     int tx,ty;
     float atimer;
     float ap=100;
-    float critmult=2;
+    float critmult=1.5f;
     public Vec2f pos;
     Vec2f hexPos,tHexPos;
     float ms=550;
@@ -31,7 +32,9 @@ public class Unit implements Common_Variables {
     int[] tt; // TEAM TRAITS
     float[] chronotimer=new float[]{100000,100000};
     boolean dead=false;
-
+    public int itemCount;
+    public int totalItemID;
+    public float lifesteal;
 
     public Unit(Unit_Info ui, Board b, int x, int y, int[] teamtraits, boolean ally,int index,int star){
         b.m[(ally)?x:b.m.length-1-x][(ally)?b.m[0].length-1-y:y]=index+1;
@@ -59,6 +62,9 @@ public class Unit implements Common_Variables {
         hp[0]=hp[1];
         atimer=1/as;
         chronotimer[0]=chronotimer[1];
+        itemCount= 0;
+        totalItemID= 1;
+        lifesteal= (float)0.0;
     }
     public void applyTraitStatBonuses(int[] teamtraits){
         if (teamtraits[1]>=2){
@@ -199,4 +205,12 @@ public class Unit implements Common_Variables {
         mana[0]+=amt;
         if (mana[0]>mana[1]){mana[0]=mana[1];}
     }
+    public void addItemID(int id){
+        totalItemID*=id;
+    }
+    public void addHP(int hp){
+        this.hp[1]+=hp;
+        this.hp[0]=this.hp[1];
+    }
+
 }
